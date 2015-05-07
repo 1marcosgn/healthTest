@@ -14,6 +14,8 @@
 		7F2A672C1AFAC12C00EE67CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F2A672B1AFAC12C00EE67CD /* Images.xcassets */; };
 		7F2A672F1AFAC12C00EE67CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F2A672D1AFAC12C00EE67CD /* LaunchScreen.xib */; };
 		7F2A673B1AFAC12C00EE67CD /* healthTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2A673A1AFAC12C00EE67CD /* healthTestTests.m */; };
+		7F2A67461AFAC1FA00EE67CD /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2A67451AFAC1FA00EE67CD /* HealthKit.framework */; };
+		7F2A674A1AFACBB000EE67CD /* mySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2A67491AFACBB000EE67CD /* mySingleton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		7F2A67341AFAC12C00EE67CD /* healthTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = healthTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F2A67391AFAC12C00EE67CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F2A673A1AFAC12C00EE67CD /* healthTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = healthTestTests.m; sourceTree = "<group>"; };
+		7F2A67441AFAC1FA00EE67CD /* healthTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = healthTest.entitlements; sourceTree = "<group>"; };
+		7F2A67451AFAC1FA00EE67CD /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		7F2A67481AFACBB000EE67CD /* mySingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mySingleton.h; sourceTree = "<group>"; };
+		7F2A67491AFACBB000EE67CD /* mySingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mySingleton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F2A67461AFAC1FA00EE67CD /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +70,7 @@
 		7F2A67121AFAC12B00EE67CD = {
 			isa = PBXGroup;
 			children = (
+				7F2A67451AFAC1FA00EE67CD /* HealthKit.framework */,
 				7F2A671D1AFAC12C00EE67CD /* healthTest */,
 				7F2A67371AFAC12C00EE67CD /* healthTestTests */,
 				7F2A671C1AFAC12C00EE67CD /* Products */,
@@ -81,6 +89,8 @@
 		7F2A671D1AFAC12C00EE67CD /* healthTest */ = {
 			isa = PBXGroup;
 			children = (
+				7F2A67471AFACB9300EE67CD /* Utilities */,
+				7F2A67441AFAC1FA00EE67CD /* healthTest.entitlements */,
 				7F2A67221AFAC12C00EE67CD /* AppDelegate.h */,
 				7F2A67231AFAC12C00EE67CD /* AppDelegate.m */,
 				7F2A67251AFAC12C00EE67CD /* ViewController.h */,
@@ -117,6 +127,15 @@
 				7F2A67391AFAC12C00EE67CD /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7F2A67471AFACB9300EE67CD /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7F2A67481AFACBB000EE67CD /* mySingleton.h */,
+				7F2A67491AFACBB000EE67CD /* mySingleton.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +187,12 @@
 				TargetAttributes = {
 					7F2A671A1AFAC12B00EE67CD = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = YXC4836V89;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					7F2A67331AFAC12C00EE67CD = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -220,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F2A67271AFAC12C00EE67CD /* ViewController.m in Sources */,
+				7F2A674A1AFACBB000EE67CD /* mySingleton.m in Sources */,
 				7F2A67241AFAC12C00EE67CD /* AppDelegate.m in Sources */,
 				7F2A67211AFAC12C00EE67CD /* main.m in Sources */,
 			);
@@ -347,9 +373,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = healthTest/healthTest.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = healthTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -357,9 +387,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = healthTest/healthTest.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = healthTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

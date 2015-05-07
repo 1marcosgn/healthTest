@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <HealthKit/HealthKit.h>
+#import "mySingleton.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,60 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    //Check Availability
+    if (NSClassFromString(@"HKHealthStore") && [HKHealthStore isHealthDataAvailable]) {
+        
+        
+        //Request Authorization
+        HKHealthStore *healthStore = [[HKHealthStore alloc]init];
+        
+        //Share body mass, height and body mass index
+        NSSet *shareObjectTypes = [NSSet setWithObjects:
+                                   [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBodyMass],
+                                   [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierHeight],
+                                   [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBodyMassIndex],
+
+                                   //Request authorization to share Sleep Analysis information
+                                   [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis],
+                                   
+                                   nil];
+        
+        //Read date of birht, biological sex and step count
+        NSSet *readObjectTypes = [NSSet setWithObjects:
+                                  [HKObjectType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierDateOfBirth],
+                                  [HKObjectType characteristicTypeForIdentifier:HKCharacteristicTypeIdentifierBiologicalSex],
+                                  [HKObjectType characteristicTypeForIdentifier:HKQuantityTypeIdentifierStepCount],
+                                  
+                                  nil];
+        
+        
+        //Request access
+        [healthStore requestAuthorizationToShareTypes:shareObjectTypes
+                                            readTypes:readObjectTypes
+                                           completion:^(BOOL success, NSError *error){
+                                           
+                                               if (success == YES) {
+                                                   //Store 'healthStore' in a Singleton
+                                                   mySingleton *Singleton = [mySingleton sharedSinleton];
+                                                   Singleton.healthStoreGlobal = healthStore;
+                                               }
+                                               else{
+                                                   //Determine if it was an error or if the
+                                                   //user just canceled the authorization request
+                                               }
+                                           
+                                           }
+         
+         ];
+        
+    }
+    else{
+        NSLog(@"HealthKit not available =(...");
+    }
+    
+    
     return YES;
 }
 
